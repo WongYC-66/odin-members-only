@@ -97,7 +97,7 @@ exports.sign_out_get = asyncHandler(async (req, res, next) => {
 exports.join_club_get = asyncHandler(async (req, res, next) => {
   // must log-in first
   if (req.isAuthenticated() && !req.user.isMember) {
-    res.render('join-club', { title: 'Join Club', user: req.user });
+    res.render('join-club', { title: 'Join Club / Member', user: req.user });
   } else {
     res.redirect("/");
   }
@@ -119,7 +119,7 @@ exports.join_club_post = [
     // There are errors. Render form again with sanitized values/error messages.
     if (!errors.isEmpty()) {
       res.render('join-club', {
-        title: 'Join Club',
+        title: 'Join Club / Member',
         user : req.user,
         errors: errors.array()
       });

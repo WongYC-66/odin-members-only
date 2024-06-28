@@ -1,14 +1,21 @@
 var express = require('express');
 var router = express.Router();
-const users = require('../controllers/users.js')
+
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
-const User = require('../model/user')
+const users = require('../controllers/users.js')
+const messages = require('../controllers/messages.js')
+
+const Message = require('../model/message')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'OnlyMembers', user: req.user});
+router.get('/', async function (req, res, next) {
+  let allMessages = await Message.find()
+    .populate('user', 'username')
+    .sort({ timestamp: -1})
+    .exec()
+  res.render('index', { user: req.user, messages: allMessages });
 });
 
 // Sign Up Get Request
@@ -37,5 +44,11 @@ router.get('/upgrade-to-admin', users.join_club_admin_get);
 
 // Handles Upgrade to Admin Post Request
 router.post('/upgrade-to-admin', users.join_club_admin_post);
+
+// Handles Post new message Post Request
+router.post('/message-post', messages.message_post);
+
+// Handles delete message Post Request
+router.post('/message-delete-post', messages.message_delete_post);
 
 module.exports = router;

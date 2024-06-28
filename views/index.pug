@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  if user 
+    p Welcome Back, #{user.username}
+    a(href="/sign-out") 
+      button(class="me-3") Sign Out
+
+    if !user.isMember
+      a(href="/join-the-club") 
+        button(class="me-3") Join Club
+
+    if !user.isAdmin  
+      a(href="/upgrade-to-admin") 
+        button(class="me-3") Upgrade to Admin
+  else 
+    a(href="/sign-up") 
+      button(class="me-3") Sign Up
+    p already have an account ? 
+      a(href="/sign-in") sign in 

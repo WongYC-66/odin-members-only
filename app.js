@@ -8,8 +8,8 @@ const MongoStore = require('connect-mongo');
 const passport = require('passport')
 
 
-
-require('dotenv').config()  // import .env environment variable file
+if(process.env.NODE_ENV != 'production')
+  require('dotenv').config()  // import .env environment variable file
 
 var indexRouter = require('./routes/index');
 
